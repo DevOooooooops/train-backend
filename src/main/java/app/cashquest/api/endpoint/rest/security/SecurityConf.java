@@ -2,6 +2,7 @@ package app.cashquest.api.endpoint.rest.security;
 
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.PUT;
 
 import app.cashquest.api.endpoint.rest.security.authentication.AuthProvider;
 import app.cashquest.api.endpoint.rest.security.exception.ForbiddenException;
@@ -83,7 +84,15 @@ public class SecurityConf {
                     .requestMatchers("/whoami")
                     .authenticated()
                     .requestMatchers("/token")
-                    .permitAll())
+                    .permitAll()
+
+                    .requestMatchers(GET, "/user/transactions")
+                        .authenticated()
+                    .requestMatchers(GET, "/user/transactions/*")
+                        .authenticated()
+                    .requestMatchers(PUT, "/user/transactions/*")
+                        .authenticated()
+        )
         .cors(AbstractHttpConfigurer::disable);
     return http.build();
     // @formatter:on

@@ -47,6 +47,32 @@ paths:
           $ref: "#/components/responses/400"
         500:
           $ref: '#/components/responses/500'
+  '/auth':
+    post:
+      tags:
+        - Security
+      operationId: getToken
+      summary: Get authentication token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthUser'
+        required: true
+      responses:
+        200:
+          description: The username and the authentication token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthenticatedUser"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
+
 components:
   securitySchemes:
     BearerAuth:
@@ -104,6 +130,18 @@ components:
       properties:
         user:
           $ref: '#/components/schemas/User'
+    AuthUser:
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    AuthenticatedUser:
+      properties:
+        username:
+          type: string
+        bearerToken:
+          type: string
     Page:
       type: integer
       description: Start at `1`

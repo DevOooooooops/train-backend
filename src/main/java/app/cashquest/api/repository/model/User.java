@@ -1,7 +1,10 @@
 package app.cashquest.api.repository.model;
 
+import app.cashquest.api.endpoint.rest.model.BudgetSavingMode;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,4 +32,5 @@ public class User {
   private String password;
   private LocalDate birthdate;
   private Income income;
+
 }

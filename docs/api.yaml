@@ -155,7 +155,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/User"
+                  $ref: "#/components/schemas/Transaction"
         400:
           $ref: "#/components/responses/400"
         403:

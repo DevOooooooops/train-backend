@@ -29,6 +29,8 @@ paths:
   '/whoami':
     get:
       security: [ BearerAuth: [ ] ]
+      tags:
+        - User
       operationId: whoami
       responses:
         200:
@@ -128,8 +130,13 @@ components:
           type: string
     Whoami:
       properties:
-        user:
-          $ref: '#/components/schemas/User'
+        id:
+          type: string
+        username:
+          type: string
+          format: email
+        birthDate:
+          type: string
     AuthUser:
       properties:
         username:

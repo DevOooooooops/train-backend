@@ -17,11 +17,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class User {
-    @Id
-    @Column(name = "id", nullable = false)
-    private String id;
+  @Id
+  @Column(name = "id", nullable = false)
+  private String id;
 
-    private String username;
-    private String password;
-    private LocalDate birthdate;
+  private String username;
+  private String password;
+  private LocalDate birthdate;
 }

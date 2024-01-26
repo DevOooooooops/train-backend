@@ -35,6 +35,9 @@ public class AuthProvider extends AbstractUserDetailsAuthenticationProvider {
       throw new UsernameNotFoundException("bad credentials");
     }
     String extractedUsername = authenticator.apply(bearer);
+    if (extractedUsername == null) {
+      throw new UsernameNotFoundException("No username found.");
+    }
     return new Principal(userService.findByUsername(extractedUsername), bearer);
   }
 

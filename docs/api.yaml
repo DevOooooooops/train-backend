@@ -47,7 +47,7 @@ paths:
           $ref: "#/components/responses/400"
         500:
           $ref: '#/components/responses/500'
-  '/auth':
+  '/token':
     post:
       tags:
         - Security

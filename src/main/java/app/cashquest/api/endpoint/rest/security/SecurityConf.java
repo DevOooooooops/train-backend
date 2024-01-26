@@ -1,6 +1,7 @@
 package app.cashquest.api.endpoint.rest.security;
 
 import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
 
 import app.cashquest.api.endpoint.rest.security.authentication.AuthProvider;
 import app.cashquest.api.endpoint.rest.security.exception.ForbiddenException;
@@ -15,6 +16,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -28,7 +31,6 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 @EnableWebSecurity
 public class SecurityConf {
   public static final String AUTHORIZATION_HEADER = "Authorization";
-
   private final AuthProvider authProvider;
   private final HandlerExceptionResolver exceptionResolver;
 
@@ -69,7 +71,9 @@ public class SecurityConf {
         .addFilterBefore(
             bearerFilter(
                 new NegatedRequestMatcher(
-                    new OrRequestMatcher(new AntPathRequestMatcher("/ping", GET.toString())))),
+                    new OrRequestMatcher(
+                        new AntPathRequestMatcher("/ping", GET.toString()),
+                        new AntPathRequestMatcher("/token", POST.toString())))),
             AnonymousAuthenticationFilter.class)
         .authorizeHttpRequests(
             (authorize) ->
@@ -77,9 +81,16 @@ public class SecurityConf {
                     .requestMatchers("/ping")
                     .permitAll()
                     .requestMatchers("/whoami")
-                    .authenticated());
+                    .authenticated()
+                    .requestMatchers("/token")
+                    .permitAll());
     return http.build();
     // @formatter:on
+  }
+
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
   }
 
   private BearerAuthFilter bearerFilter(RequestMatcher requestMatcher) {

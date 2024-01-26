@@ -93,6 +93,29 @@ paths:
           $ref: '#/components/responses/403'
         500:
           $ref: '#/components/responses/500'
+    post:
+      tags:
+        - Users
+      operationId: createUser
+      summary: Create user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUser"
+      responses:
+        200:
+          description: The created user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateUser"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
     put:
       tags:
         - Users
@@ -281,23 +304,26 @@ components:
     CrupdateUser:
       type: object
       properties:
+        user:
+          $ref: "#/components/schemas/CreateUser"
+        income:
+          $ref: "#/components/schemas/Income"
+    CreateUser:
+      type: object
+      properties:
         username:
           type: string
-          format: email
         password:
           type: string
         birthDate:
           type: string
           format: date-time
-        income:
-          $ref: "#/components/schemas/Income"
     Whoami:
       properties:
         id:
           type: string
         username:
           type: string
-          format: email
         birthDate:
           type: string
     AuthUser:

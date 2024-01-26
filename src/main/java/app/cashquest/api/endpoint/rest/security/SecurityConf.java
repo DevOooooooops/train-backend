@@ -83,7 +83,8 @@ public class SecurityConf {
                     .requestMatchers("/whoami")
                     .authenticated()
                     .requestMatchers("/token")
-                    .permitAll());
+                    .permitAll())
+        .cors(AbstractHttpConfigurer::disable);
     return http.build();
     // @formatter:on
   }

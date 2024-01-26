@@ -12,41 +12,41 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor
 public class Principal implements UserDetails {
 
-    private final User user;
-    private String bearer;
+  private final User user;
+  private String bearer;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
-    }
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return List.of();
+  }
 
-    @Override
-    public String getPassword() {
-        return bearer;
-    }
+  @Override
+  public String getPassword() {
+    return bearer;
+  }
 
-    @Override
-    public String getUsername() {
-        return user.getUsername();
-    }
+  @Override
+  public String getUsername() {
+    return user.getUsername();
+  }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return isEnabled();
-    }
+  @Override
+  public boolean isAccountNonExpired() {
+    return isEnabled();
+  }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return isEnabled();
-    }
+  @Override
+  public boolean isAccountNonLocked() {
+    return isEnabled();
+  }
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return isEnabled();
-    }
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return isEnabled();
+  }
 
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+  @Override
+  public boolean isEnabled() {
+    return true;
+  }
 }

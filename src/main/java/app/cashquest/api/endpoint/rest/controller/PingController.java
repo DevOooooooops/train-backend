@@ -10,11 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class PingController {
-    @GetMapping(value = "/ping", produces = TEXT_PLAIN_VALUE)
-    public ResponseEntity<String> ping() {
-        return ResponseEntity
-                .status(OK)
-                .contentType(TEXT_PLAIN)
-                .body("pong");
-    }
+  @GetMapping(value = "/ping", produces = TEXT_PLAIN_VALUE)
+  public ResponseEntity<String> ping() {
+    return ResponseEntity.status(OK).contentType(TEXT_PLAIN).body("pong");
+  }
 }

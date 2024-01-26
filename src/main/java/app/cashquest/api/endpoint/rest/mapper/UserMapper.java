@@ -18,9 +18,9 @@ import static java.util.UUID.randomUUID;
 @AllArgsConstructor
 public class UserMapper {
   private final PasswordEncoder passwordEncoder;
+
   public User toDomain(CreateUser user){
     return User.builder()
-        .id(randomUUID().toString())
         .username(user.getUsername())
         .password(passwordEncoder.encode(user.getPassword()))
         .birthdate(LocalDate.from(Objects.requireNonNull(user.getBirthDate())))
@@ -42,11 +42,12 @@ public class UserMapper {
   }
 
   public app.cashquest.api.endpoint.rest.model.User domainToRest(User user){
+    app.cashquest.api.repository.model.Income income = user.getIncome();
     return new app.cashquest.api.endpoint.rest.model.User()
-        .balance(user.getIncome().getAmount())
-        .income(
-            new Income().amount(user.getIncome().getAmount())
-                .earningFrequency(user.getIncome().getEarningFrequency()))
+//        TODO: calculate balance based on income and outcome
+        .balance(income.getAmount())
+        .income(new Income().amount(income.getAmount())
+                .earningFrequency(income.getEarningFrequency()))
         .user(toRest(user))
         .level(checkLevel());
   }

@@ -23,17 +23,9 @@ public class JwtComponent {
         .compact();
   }
 
-  private String getUsernameFromToken(String token) {
-    return Jwts.parser()
-        .setSigningKey(conf.getSecret())
-        .parseClaimsJwt(token)
-        .getBody()
-        .getSubject();
-  }
-
   public String validateToken(String token) {
-    String username = getUsernameFromToken(token);
-    Claims claims = Jwts.parser().setSigningKey(conf.getSecret()).parseClaimsJwt(token).getBody();
+    Claims claims = Jwts.parser().setSigningKey(conf.getSecret()).parseClaimsJws(token).getBody();
+    String username = claims.getSubject();
     boolean isTokenExpired = claims.getExpiration().before(new Date());
     if (!isTokenExpired) {
       return username;

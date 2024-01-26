@@ -15,6 +15,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
+import static org.hibernate.type.SqlTypes.JSON;
 
 @Entity
 @AllArgsConstructor
@@ -31,6 +36,7 @@ public class User {
   private String username;
   private String password;
   private LocalDate birthdate;
+  @JdbcTypeCode(value = JSON)
   private Income income;
 
 }

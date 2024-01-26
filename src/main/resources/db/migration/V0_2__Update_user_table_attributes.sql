@@ -12,3 +12,6 @@ ALTER TABLE "user_table"
 
 ALTER TABLE "user_table"
     ADD CONSTRAINT username_unique unique (username);
+
+ALTER TABLE "user_table"
+ADD COLUMN if not exists income jsonb default '{}';

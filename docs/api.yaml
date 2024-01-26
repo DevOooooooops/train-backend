@@ -146,6 +146,13 @@ paths:
       operationId: getTransactionById
       security: [ BearerAuth: [ ] ]
       summary: get transaction by id
+      parameters:
+        - in: path
+          name: transaction_id
+          required: true
+          description: transaction identifier
+          schema:
+            type: string
       responses:
         200:
           description: transactions
@@ -162,6 +169,13 @@ paths:
     put:
       tags:
         - UserTransactions
+      parameters:
+        - in: path
+          name: transaction_id
+          required: true
+          description: transaction identifier
+          schema:
+            type: string
       operationId: crupdateTransaction
       security: [ BearerAuth: [ ] ]
       summary: creates or updates transaction
@@ -250,6 +264,9 @@ components:
         amount:
           type: integer
           description: real amount times 100, the last two digits will place the decimal point
+        reason:
+          type: string
+          description: reason of the transaction
     TransactionType:
       type: string
       enum:

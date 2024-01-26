@@ -1,5 +1,6 @@
 package app.cashquest.api.service;
 
+import app.cashquest.api.endpoint.rest.model.CrupdateUser;
 import app.cashquest.api.endpoint.rest.security.exception.NotFoundException;
 import app.cashquest.api.repository.UserRepository;
 import app.cashquest.api.repository.model.User;
@@ -19,5 +20,10 @@ public class UserService {
 
   public User crupdateUser(User user){
     return repository.save(user);
+  }
+
+//  TODO: implement level check
+  public static int checkLevel(){
+    return 0;
   }
 }

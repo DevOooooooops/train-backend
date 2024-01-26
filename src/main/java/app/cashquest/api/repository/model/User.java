@@ -28,4 +28,5 @@ public class User {
   private String username;
   private String password;
   private LocalDate birthdate;
+  private Income income;
 }

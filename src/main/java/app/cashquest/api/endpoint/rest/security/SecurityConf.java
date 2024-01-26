@@ -75,7 +75,6 @@ public class SecurityConf {
                     new OrRequestMatcher(
                         new AntPathRequestMatcher("/ping", GET.toString()),
                         new AntPathRequestMatcher("/token", POST.toString()),
-                        new AntPathRequestMatcher("/user", PUT.toString()),
                         new AntPathRequestMatcher("/user", POST.toString())
                     )
                 )
@@ -91,8 +90,12 @@ public class SecurityConf {
                     .authenticated()
                     .requestMatchers("/token")
                     .permitAll()
-                    .requestMatchers("/user")
+                    .requestMatchers(POST, "/user")
                     .permitAll()
+                    .requestMatchers(PUT, "/user")
+                    .authenticated()
+                    .requestMatchers(GET, "/user")
+                    .authenticated()
                     .requestMatchers(GET, "/user/transactions")
                         .authenticated()
                     .requestMatchers(GET, "/user/transactions/*")

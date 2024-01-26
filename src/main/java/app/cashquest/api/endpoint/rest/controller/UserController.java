@@ -3,6 +3,7 @@ package app.cashquest.api.endpoint.rest.controller;
 
 import app.cashquest.api.endpoint.rest.mapper.UserMapper;
 import app.cashquest.api.endpoint.rest.model.CreateUser;
+import app.cashquest.api.endpoint.rest.model.CreatedUser;
 import app.cashquest.api.endpoint.rest.model.CrupdateUser;
 import app.cashquest.api.endpoint.rest.model.User;
 import app.cashquest.api.service.UserService;
@@ -19,7 +20,7 @@ public class UserController {
   private UserMapper userMapper;
 
   @PostMapping("/user")
-  private CreateUser createUser(@RequestBody CreateUser user){
+  private CreatedUser createUser(@RequestBody CreateUser user){
      return userMapper.toRest(userService.crupdateUser(userMapper.toDomain(user)));
   }
 

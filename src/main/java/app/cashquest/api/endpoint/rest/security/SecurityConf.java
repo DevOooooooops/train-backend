@@ -75,7 +75,8 @@ public class SecurityConf {
                     new OrRequestMatcher(
                         new AntPathRequestMatcher("/ping", GET.toString()),
                         new AntPathRequestMatcher("/token", POST.toString()),
-                        new AntPathRequestMatcher("/user", PUT.toString())
+                        new AntPathRequestMatcher("/user", PUT.toString()),
+                        new AntPathRequestMatcher("/user", POST.toString())
                     )
                 )
               )

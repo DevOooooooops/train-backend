@@ -1,6 +1,5 @@
 package app.cashquest.api.service;
 
-import app.cashquest.api.endpoint.rest.model.CrupdateUser;
 import app.cashquest.api.endpoint.rest.security.exception.NotFoundException;
 import app.cashquest.api.repository.UserRepository;
 import app.cashquest.api.repository.model.User;

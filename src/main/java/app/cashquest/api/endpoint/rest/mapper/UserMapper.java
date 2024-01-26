@@ -1,10 +1,10 @@
 package app.cashquest.api.endpoint.rest.mapper;
 
 import app.cashquest.api.endpoint.rest.model.CreateUser;
+import app.cashquest.api.endpoint.rest.model.CreatedUser;
 import app.cashquest.api.endpoint.rest.model.CrupdateUser;
 import app.cashquest.api.endpoint.rest.model.Income;
 import app.cashquest.api.repository.model.User;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
@@ -25,11 +25,10 @@ public class UserMapper {
         .build();
   }
 
-  public CreateUser toRest(User domain){
-    return new CreateUser()
+  public CreatedUser toRest(User domain){
+    return new CreatedUser()
         .username(domain.getUsername())
-        .birthDate(Instant.from(domain.getBirthdate()))
-        .password(domain.getPassword());
+        .birthDate(LocalDate.from(domain.getBirthdate()));
   }
 
   public User toDomain(CrupdateUser user){
@@ -37,7 +36,6 @@ public class UserMapper {
         .id(randomUUID().toString())
         .username(Objects.requireNonNull(user.getUser()).getUsername())
         .birthdate(LocalDate.from(Objects.requireNonNull(user.getUser().getBirthDate())))
-        .password(user.getUser().getPassword())
         .build();
   }
 

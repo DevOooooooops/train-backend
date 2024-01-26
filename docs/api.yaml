@@ -51,6 +51,7 @@ paths:
           $ref: '#/components/responses/500'
   '/token':
     post:
+      security: [ ]
       tags:
         - Security
       operationId: getToken
@@ -74,7 +75,114 @@ paths:
           $ref: '#/components/responses/403'
         500:
           $ref: '#/components/responses/500'
-
+  '/user':
+    get:
+      security: [ BearerAuth: [ ] ]
+      tags:
+        - Users
+      operationId: getCurrentUser
+      summary: get the currently authenticated user
+      responses:
+        200:
+          description: currently connected user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
+    put:
+      tags:
+        - Users
+      operationId: crupdateUser
+      security: [ BearerAuth: [ ] ]
+      summary: create or update the current user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CrupdateUser"
+      responses:
+        200:
+          description: the user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
+  '/user/transactions':
+    get:
+      tags:
+        - UserTransactions
+      operationId: getTransactions
+      security: [ BearerAuth: [ ] ]
+      summary: get all transactions
+      responses:
+        200:
+          description: transactions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
+  '/user/transactions/{transaction_id}':
+    get:
+      tags:
+        - UserTransactions
+      operationId: getTransactionById
+      security: [ BearerAuth: [ ] ]
+      summary: get transaction by id
+      responses:
+        200:
+          description: transactions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transaction"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
+    put:
+      tags:
+        - UserTransactions
+      operationId: crupdateTransaction
+      security: [ BearerAuth: [ ] ]
+      summary: creates or updates transaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Transaction"
+      responses:
+        200:
+          description: transactions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transaction"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
 components:
   securitySchemes:
     BearerAuth:
@@ -115,12 +223,47 @@ components:
     User:
       type: object
       allOf:
-        - $ref: "#/components/schemas/CreateUser"
-    CreateUser:
+        - $ref: "#/components/schemas/CrupdateUser"
+      properties:
+        level:
+          type: integer
+          format: int32
+        balance:
+          type: integer
+          description: real balance times 100, the last two digits will place the decimal point
+          format: int32
+    Income:
+      type: object
+      properties:
+        earningFrequency:
+          $ref: "#/components/schemas/BudgetSavingMode"
+        amount:
+          type: integer
+          description: real income times 100, the last two digits will place the decimal point
+    Transaction:
       type: object
       properties:
         id:
           type: string
+        type:
+          $ref: "#/components/schemas/TransactionType"
+        amount:
+          type: integer
+          description: real amount times 100, the last two digits will place the decimal point
+    TransactionType:
+      type: string
+      enum:
+        - INCOME
+        - OUTCOME
+    BudgetSavingMode:
+      type: string
+      enum:
+        - MONTHLY
+        - WEEKLY
+        - DAILY
+    CrupdateUser:
+      type: object
+      properties:
         username:
           type: string
           format: email
@@ -129,6 +272,8 @@ components:
         birthDate:
           type: string
           format: date-time
+        income:
+          $ref: "#/components/schemas/Income"
     Whoami:
       properties:
         id:

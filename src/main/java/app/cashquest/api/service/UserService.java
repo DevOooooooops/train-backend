@@ -16,4 +16,8 @@ public class UserService {
         .findByUsername(username)
         .orElseThrow(() -> new NotFoundException("User.username= " + username + " not found"));
   }
+
+  public User crupdateUser(User user){
+    return repository.save(user);
+  }
 }

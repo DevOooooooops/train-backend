@@ -318,6 +318,10 @@ components:
         amount:
           type: integer
           description: real income times 100, the last two digits will place the decimal point
+        savingTarget:
+          type: integer
+          description: describes how much percent of your income you want to save
+
     Transaction:
       type: object
       properties:

@@ -117,14 +117,14 @@ paths:
     put:
       tags:
         - Users
-      operationId: crupdateUser
+      operationId: updateUser
       security: [ BearerAuth: [ ] ]
-      summary: create or update the current user
+      summary: update the current user
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CrupdateUser"
+              $ref: "#/components/schemas/UpdateUser"
       responses:
         200:
           description: the user
@@ -301,7 +301,7 @@ components:
     User:
       type: object
       allOf:
-        - $ref: "#/components/schemas/CrupdateUser"
+        - $ref: "#/components/schemas/UpdateUser"
       properties:
         level:
           type: integer
@@ -346,7 +346,7 @@ components:
         - MONTHLY
         - WEEKLY
         - DAILY
-    CrupdateUser:
+    UpdateUser:
       type: object
       properties:
         user:

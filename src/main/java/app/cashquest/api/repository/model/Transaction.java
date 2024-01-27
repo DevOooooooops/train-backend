@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnTransformer;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @AllArgsConstructor
@@ -32,5 +33,6 @@ public class Transaction {
   private TransactionType type;
 
   private String reason;
+  @CreationTimestamp
   private Instant creationDatetime;
 }

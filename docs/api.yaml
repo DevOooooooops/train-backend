@@ -438,6 +438,9 @@ components:
         reason:
           type: string
           description: reason of the transaction
+        creationDatetime:
+          type: string
+          format: date-time
     TransactionType:
       type: string
       enum:

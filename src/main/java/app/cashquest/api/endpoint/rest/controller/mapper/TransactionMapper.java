@@ -10,6 +10,7 @@ public class TransactionMapper {
         .id(domain.getId())
         .amount(domain.getAmount())
         .reason(domain.getReason())
+        .creationDatetime(domain.getCreationDatetime())
         .type(domain.getType());
   }
 

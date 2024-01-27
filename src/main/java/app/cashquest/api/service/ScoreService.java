@@ -20,8 +20,4 @@ public class ScoreService {
     }
     userService.crupdateUser(actualUser);
   }
-
-  public void updateLevelIfNecessary(User user) {
-
-  }
 }

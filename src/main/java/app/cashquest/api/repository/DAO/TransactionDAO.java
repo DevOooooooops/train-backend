@@ -18,7 +18,7 @@ public class TransactionDAO {
   private EntityManager entityManager;
 
   public List<Transaction> findByStartingDateAndEndingDate(
-      Instant startingDate, Instant endingDate) {
+          Instant startingDate, Instant endingDate) {
     CriteriaBuilder cb = entityManager.getCriteriaBuilder();
     CriteriaQuery<Transaction> query = cb.createQuery(Transaction.class);
     Root<Transaction> root = query.from(Transaction.class);
@@ -26,14 +26,12 @@ public class TransactionDAO {
     List<Predicate> predicates = new ArrayList<>();
 
     if (startingDate != null) {
-      Predicate startingDatePredicate =
-          cb.greaterThanOrEqualTo(root.get("creationDatetime"), startingDate);
+      Predicate startingDatePredicate = cb.greaterThanOrEqualTo(root.get("creationDatetime"), startingDate);
       predicates.add(startingDatePredicate);
     }
 
-    if (endingDate != null) {
-      Predicate endingDatePredicate =
-          cb.lessThanOrEqualTo(root.get("creationDatetime"), endingDate);
+    if (endingDate != null){
+      Predicate endingDatePredicate = cb.lessThanOrEqualTo(root.get("creationDatetime"), endingDate);
       predicates.add(endingDatePredicate);
     }
 
@@ -41,4 +39,5 @@ public class TransactionDAO {
 
     return entityManager.createQuery(query).getResultList();
   }
+
 }

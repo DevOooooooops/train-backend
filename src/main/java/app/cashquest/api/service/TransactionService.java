@@ -27,14 +27,12 @@ public class TransactionService {
     return repository.findAll();
   }
 
-  public Transaction save(Transaction transaction) {
-    // TODO: how does income outcome work ?
-    return repository.save(transaction);
-  }
+    public Transaction save(Transaction transaction) {
+        //TODO: how does income outcome work ?
+        return repository.save(transaction);
+    }
 
-  public List<Transaction> transactionsFilteredByDate(
-      LocalDateTime startingDate, LocalDateTime endingDate) {
-    return transactionDAO.findByStartingDateAndEndingDate(
-        startingDate.toInstant(UTC), endingDate.toInstant(UTC));
-  }
+    public List<Transaction> transactionsFilteredByDate(LocalDateTime startingDate, LocalDateTime endingDate){
+        return transactionDAO.findByStartingDateAndEndingDate(startingDate.toInstant(UTC), endingDate.toInstant(UTC));
+    }
 }

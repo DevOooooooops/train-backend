@@ -45,17 +45,17 @@ public class UserMapper {
 
   public User toDomain(UpdateUser user, Principal principal) {
     CreatedUser userPayload = user.getUser();
-    Profile profile = user.getProfile();
     User actual = principal.getUser();
+    Profile profile = user.getProfile();
     return User.builder()
         .id(actual.getId())
         .password(principal.getPassword())
         .username(Objects.requireNonNull(userPayload).getUsername())
         .birthdate(LocalDate.from(Objects.requireNonNull(userPayload.getBirthDate())))
         .income(incomeMapper.toDomain(Objects.requireNonNull(user.getIncome())))
-        .firstName(profile.getFirstName())
-        .lastName(profile.getLastName())
-        .sex(profile.getSex())
+        .firstName(profile == null ? null : profile.getFirstName())
+        .lastName(profile == null ? null : profile.getFirstName())
+        .sex(profile == null ? null : profile.getSex())
         .balance(actual.getBalance())
         .score(actual.getScore())
         .level(actual.getLevel())

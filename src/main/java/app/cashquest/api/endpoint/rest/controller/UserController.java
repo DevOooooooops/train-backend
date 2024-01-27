@@ -3,7 +3,7 @@ package app.cashquest.api.endpoint.rest.controller;
 import app.cashquest.api.endpoint.rest.mapper.UserMapper;
 import app.cashquest.api.endpoint.rest.model.CreateUser;
 import app.cashquest.api.endpoint.rest.model.CreatedUser;
-import app.cashquest.api.endpoint.rest.model.CrupdateUser;
+import app.cashquest.api.endpoint.rest.model.UpdateUser;
 import app.cashquest.api.endpoint.rest.model.User;
 import app.cashquest.api.endpoint.rest.security.model.Principal;
 import app.cashquest.api.service.UserService;
@@ -28,7 +28,7 @@ public class UserController {
 
   @PutMapping("/user")
   private User crupdateUser(
-      @RequestBody CrupdateUser user, @AuthenticationPrincipal Principal principal) {
+          @RequestBody UpdateUser user, @AuthenticationPrincipal Principal principal) {
     return userMapper.domainToRest(userService.crupdateUser(userMapper.toDomain(user, principal)));
   }
 

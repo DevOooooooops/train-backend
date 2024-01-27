@@ -220,6 +220,27 @@ paths:
           $ref: '#/components/responses/403'
         500:
           $ref: '#/components/responses/500'
+  '/quest':
+    get:
+      tags:
+        - Quests
+      summary: Get current task to complete
+      security: [ BearerAuth: []]
+      responses:
+        200:
+          description: The actual quest to complete
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Quest"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: "#/components/responses/403"
+        500:
+          $ref: "#/components/responses/500"
+
+
 components:
   securitySchemes:
     BearerAuth:
@@ -257,6 +278,21 @@ components:
           schema:
             $ref: '#/components/schemas/InternalServerException'
   schemas:
+    Quest:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        objectiveDescription:
+          type: string
+        amountObjective:
+          type: number
+        points:
+          type: number
+        requiredLevel:
+          type: number
     User:
       type: object
       allOf:

@@ -1,6 +1,7 @@
 package app.cashquest.api.endpoint.rest.mapper;
 
 import app.cashquest.api.endpoint.rest.controller.mapper.QuestMapper;
+import app.cashquest.api.endpoint.rest.model.CreateQuestHistory;
 import app.cashquest.api.endpoint.rest.model.QuestHistory;
 import app.cashquest.api.repository.model.User;
 import app.cashquest.api.service.QuestService;
@@ -19,6 +20,15 @@ public class QuestHistoryMapper {
         .id(domain.getId())
         .status(domain.getStatus())
         .user(userMapper.domainToRest(user))
-        .quest(questMapper.toRest(questService.getById(domain.getId())));
+        .quest(questMapper.toRest(questService.getById(domain.getQuestId())));
+  }
+
+  public app.cashquest.api.repository.model.QuestHistory toDomain(CreateQuestHistory rest) {
+    return app.cashquest.api.repository.model.QuestHistory.builder()
+        .id(rest.getId())
+        .userId(rest.getUserId())
+        .questId(rest.getQuestId())
+        .status(rest.getStatus())
+        .build();
   }
 }

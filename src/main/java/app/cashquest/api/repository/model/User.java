@@ -42,8 +42,10 @@ public class User {
 
   @JdbcTypeCode(value = JSON)
   private Income income;
+
   private String firstName;
   private String lastName;
+
   @Enumerated(STRING)
   @ColumnTransformer(write = "?::sex")
   private Profile.SexEnum sex;

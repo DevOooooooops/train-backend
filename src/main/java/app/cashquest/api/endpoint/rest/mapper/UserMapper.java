@@ -5,9 +5,9 @@ import static app.cashquest.api.service.UserService.checkLevel;
 
 import app.cashquest.api.endpoint.rest.model.CreateUser;
 import app.cashquest.api.endpoint.rest.model.CreatedUser;
-import app.cashquest.api.endpoint.rest.model.UpdateUser;
 import app.cashquest.api.endpoint.rest.model.Income;
 import app.cashquest.api.endpoint.rest.model.Profile;
+import app.cashquest.api.endpoint.rest.model.UpdateUser;
 import app.cashquest.api.endpoint.rest.security.model.Principal;
 import app.cashquest.api.repository.TransactionRepository;
 import app.cashquest.api.repository.model.Transaction;
@@ -37,7 +37,6 @@ public class UserMapper {
 
   public CreatedUser toRest(User domain) {
     return new CreatedUser()
-        .id(domain.getId())
         .username(domain.getUsername())
         .birthDate(LocalDate.from(domain.getBirthdate()));
   }
@@ -78,7 +77,8 @@ public class UserMapper {
                 .savingTarget(income.getSavingTarget()))
         .user(toRest(user))
         .level(checkLevel())
-        .profile(new Profile()
+        .profile(
+            new Profile()
                 .firstName(user.getFirstName())
                 .sex(user.getSex())
                 .lastName(user.getLastName()));

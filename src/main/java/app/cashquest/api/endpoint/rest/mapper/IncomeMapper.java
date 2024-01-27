@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class IncomeMapper {
   private final IncomeValidator validator;
+
   public app.cashquest.api.repository.model.Income toDomain(Income rest) {
     validator.accept(rest);
     return app.cashquest.api.repository.model.Income.builder()

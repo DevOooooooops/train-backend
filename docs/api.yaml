@@ -333,12 +333,13 @@ paths:
                   $ref: "#/components/schemas/SecurityQuestion"
         500:
           $ref: "#/components/responses/500"
-  '/reset_password':
+  '/reset_password_token':
     post:
       tags:
         - Security
-      summary: reset password
-      description: resets your password given your username and a secret
+      summary: get a reset password token
+      description: get a reset password token given a correct username and question_answer
+      operationId: createResetPasswordToken
       requestBody:
         content:
           application/json:
@@ -361,6 +362,36 @@ paths:
                 properties:
                   reset_token:
                     type: string
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
+  '/reset_password':
+    post:
+      tags:
+        - Security
+      summary: reset password
+      description: resets your password given your username and a secret, returns you a new Bearer and saves your new password
+      operationId: resetPassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reset_token:
+                  type: string
+                new_password:
+                  type: string
+      responses:
+        200:
+          description: a reset_token valid for 1 hour
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Whoami"
         403:
           $ref: '#/components/responses/403'
         500:

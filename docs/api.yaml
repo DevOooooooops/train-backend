@@ -142,6 +142,19 @@ paths:
     get:
       tags:
         - UserTransactions
+      parameters:
+        - in: query
+          name: starting_date
+          required: false
+          description: starting date
+          schema:
+            type: string
+        - in: query
+          name: ending_date
+          required: false
+          description: ending date
+          schema:
+            type: string
       operationId: getTransactions
       security: [ BearerAuth: [ ] ]
       summary: get all transactions
@@ -160,6 +173,7 @@ paths:
           $ref: '#/components/responses/403'
         500:
           $ref: '#/components/responses/500'
+
   '/user/transactions/{transaction_id}':
     get:
       tags:

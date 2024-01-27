@@ -37,7 +37,6 @@ public class UserMapper {
 
   public CreatedUser toRest(User domain) {
     return new CreatedUser()
-        .id(domain.getId())
         .username(domain.getUsername())
         .birthDate(LocalDate.from(domain.getBirthdate()));
   }

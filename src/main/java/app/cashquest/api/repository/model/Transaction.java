@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.Instant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,4 +32,5 @@ public class Transaction {
   private TransactionType type;
 
   private String reason;
+  private Instant creationDatetime;
 }

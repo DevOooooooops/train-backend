@@ -4,6 +4,7 @@ import app.cashquest.api.endpoint.rest.model.CreateUser;
 import app.cashquest.api.endpoint.rest.model.CreatedUser;
 import app.cashquest.api.endpoint.rest.model.CrupdateUser;
 import app.cashquest.api.endpoint.rest.model.Income;
+import app.cashquest.api.endpoint.rest.security.model.Principal;
 import app.cashquest.api.repository.TransactionRepository;
 import app.cashquest.api.repository.model.Transaction;
 import app.cashquest.api.repository.model.User;
@@ -40,10 +41,13 @@ public class UserMapper {
         .birthDate(LocalDate.from(domain.getBirthdate()));
   }
 
-  public User toDomain(CrupdateUser user){
+  public User toDomain(CrupdateUser user, Principal principal){
+    CreatedUser userPayload = user.getUser();
     return User.builder()
-        .username(Objects.requireNonNull(user.getUser()).getUsername())
-        .birthdate(LocalDate.from(Objects.requireNonNull(user.getUser().getBirthDate())))
+        .id(principal.getUser().getId())
+        .password(principal.getPassword())
+        .username(Objects.requireNonNull(userPayload).getUsername())
+        .birthdate(LocalDate.from(Objects.requireNonNull(userPayload.getBirthDate())))
         .income(incomeMapper.toDomain(Objects.requireNonNull(user.getIncome())))
         .build();
   }
@@ -62,8 +66,12 @@ public class UserMapper {
         });
     return new app.cashquest.api.endpoint.rest.model.User()
         .balance(balance.get())
-        .income(new Income().amount(income.getAmount())
-            .earningFrequency(income.getEarningFrequency()))
+        .income(
+                new Income()
+                        .amount(income.getAmount())
+                        .earningFrequency(income.getEarningFrequency())
+                        .savingTarget(user.getIncome().getSavingTarget())
+        )
         .user(toRest(user))
         .level(checkLevel());
   }

@@ -10,4 +10,5 @@ import lombok.Data;
 public class Income {
   private int amount;
   private BudgetSavingMode earningFrequency;
+  private int savingTarget;
 }

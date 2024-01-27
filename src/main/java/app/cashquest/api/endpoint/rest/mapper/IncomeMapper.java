@@ -9,6 +9,7 @@ public class IncomeMapper {
     return app.cashquest.api.repository.model.Income.builder()
         .amount(rest.getAmount() != null ? rest.getAmount() : 0)
         .earningFrequency(rest.getEarningFrequency())
+        .savingTarget(rest.getSavingTarget() != null ? rest.getSavingTarget() : 0)
         .build();
   }
 }

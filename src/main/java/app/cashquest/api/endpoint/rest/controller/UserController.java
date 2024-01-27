@@ -28,8 +28,10 @@ public class UserController {
   }
 
   @PutMapping("/user")
-  private User crupdateUser(@RequestBody CrupdateUser user){
-    return userMapper.domainToRest(userService.crupdateUser(userMapper.toDomain(user)));
+  private User crupdateUser(
+          @RequestBody CrupdateUser user,
+          @AuthenticationPrincipal Principal principal){
+    return userMapper.domainToRest(userService.crupdateUser(userMapper.toDomain(user, principal)));
   }
 
   @GetMapping("/user")

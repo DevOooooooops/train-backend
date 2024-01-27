@@ -1,9 +1,12 @@
 package app.cashquest.api.repository.model;
 
+import static jakarta.persistence.EnumType.STRING;
 import static org.hibernate.type.SqlTypes.JSON;
 
+import app.cashquest.api.endpoint.rest.model.Profile;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,6 +17,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnTransformer;
 import org.hibernate.annotations.JdbcTypeCode;
 
 @Entity
@@ -38,4 +42,9 @@ public class User {
 
   @JdbcTypeCode(value = JSON)
   private Income income;
+  private String firstName;
+  private String lastName;
+  @Enumerated(STRING)
+  @ColumnTransformer(write = "?::sex")
+  private Profile.SexEnum sex;
 }

@@ -75,11 +75,7 @@ public class SecurityConf {
                     new OrRequestMatcher(
                         new AntPathRequestMatcher("/ping", GET.toString()),
                         new AntPathRequestMatcher("/token", POST.toString()),
-                        new AntPathRequestMatcher("/user", POST.toString())
-                    )
-                )
-              )
-            ,
+                        new AntPathRequestMatcher("/user", POST.toString())))),
             AnonymousAuthenticationFilter.class)
         .authorizeHttpRequests(
             (authorize) ->
@@ -97,12 +93,11 @@ public class SecurityConf {
                     .requestMatchers(GET, "/user")
                     .authenticated()
                     .requestMatchers(GET, "/user/transactions")
-                        .authenticated()
+                    .authenticated()
                     .requestMatchers(GET, "/user/transactions/*")
-                        .authenticated()
+                    .authenticated()
                     .requestMatchers(PUT, "/user/transactions/*")
-                        .authenticated()
-        )
+                    .authenticated())
         .cors(AbstractHttpConfigurer::disable);
     return http.build();
     // @formatter:on

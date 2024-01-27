@@ -5,21 +5,21 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TransactionMapper {
-    public Transaction toRest(app.cashquest.api.repository.model.Transaction domain) {
-        return new Transaction()
-                .id(domain.getId())
-                .amount(domain.getAmount())
-                .reason(domain.getReason())
-                .type(domain.getType());
-    }
+  public Transaction toRest(app.cashquest.api.repository.model.Transaction domain) {
+    return new Transaction()
+        .id(domain.getId())
+        .amount(domain.getAmount())
+        .reason(domain.getReason())
+        .type(domain.getType());
+  }
 
-    public app.cashquest.api.repository.model.Transaction toDomain(Transaction rest, String userId) {
-        return app.cashquest.api.repository.model.Transaction.builder()
-                .id(rest.getId())
-                .amount(rest.getAmount())
-                .type(rest.getType())
-                .userId(userId)
-                .reason(rest.getReason())
-                .build();
-    }
+  public app.cashquest.api.repository.model.Transaction toDomain(Transaction rest, String userId) {
+    return app.cashquest.api.repository.model.Transaction.builder()
+        .id(rest.getId())
+        .amount(rest.getAmount())
+        .type(rest.getType())
+        .userId(userId)
+        .reason(rest.getReason())
+        .build();
+  }
 }

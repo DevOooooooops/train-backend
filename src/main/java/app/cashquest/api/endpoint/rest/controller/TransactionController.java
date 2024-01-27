@@ -16,26 +16,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 public class TransactionController {
-    private final TransactionService service;
-    private final TransactionMapper mapper;
+  private final TransactionService service;
+  private final TransactionMapper mapper;
 
-    @GetMapping("/user/transactions")
-    public List<Transaction> getTransactions() {
-        return service.getAll().stream().map(mapper::toRest).toList();
-    }
+  @GetMapping("/user/transactions")
+  public List<Transaction> getTransactions() {
+    return service.getAll().stream().map(mapper::toRest).toList();
+  }
 
-    @GetMapping("/user/transactions/{id}")
-    public Transaction getTransaction(@PathVariable String id) {
-        return mapper.toRest(service.getBy(id));
-    }
+  @GetMapping("/user/transactions/{id}")
+  public Transaction getTransaction(@PathVariable String id) {
+    return mapper.toRest(service.getBy(id));
+  }
 
-    @PutMapping("/user/transactions/{id}")
-    public Transaction crupdateTransaction(
-            @PathVariable String id,
-            @RequestBody Transaction payload,
-            @AuthenticationPrincipal
-            Principal principal
-    ) {
-        return mapper.toRest(service.save(mapper.toDomain(payload, principal.getUser().getId())));
-    }
+  @PutMapping("/user/transactions/{id}")
+  public Transaction crupdateTransaction(
+      @PathVariable String id,
+      @RequestBody Transaction payload,
+      @AuthenticationPrincipal Principal principal) {
+    return mapper.toRest(service.save(mapper.toDomain(payload, principal.getUser().getId())));
+  }
 }

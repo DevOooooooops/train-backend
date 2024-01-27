@@ -1,5 +1,7 @@
 package app.cashquest.api.repository.model;
 
+import static org.hibernate.type.SqlTypes.JSON;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,7 +15,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
-import static org.hibernate.type.SqlTypes.JSON;
 
 @Entity
 @AllArgsConstructor
@@ -27,11 +28,14 @@ public class User {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", nullable = false)
   private String id;
+
   private String username;
+
   @Column(name = "password", updatable = false)
   private String password;
+
   private LocalDate birthdate;
+
   @JdbcTypeCode(value = JSON)
   private Income income;
-
 }

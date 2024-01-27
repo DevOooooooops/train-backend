@@ -22,12 +22,13 @@ import org.hibernate.annotations.ColumnTransformer;
 @Setter
 @Builder
 public class Transaction {
-    @Id
-    private String id;
-    private int amount;
-    private String userId;
-    @Enumerated(STRING)
-    @ColumnTransformer(write = "?::transaction_type")
-    private TransactionType type;
-    private String reason;
+  @Id private String id;
+  private int amount;
+  private String userId;
+
+  @Enumerated(STRING)
+  @ColumnTransformer(write = "?::transaction_type")
+  private TransactionType type;
+
+  private String reason;
 }

@@ -21,12 +21,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class TransactionController {
   private final TransactionService service;
   private final TransactionMapper mapper;
+
   @GetMapping("/user/transactions")
   public List<Transaction> getFilteredTransactions(
-      @RequestParam(name = "starting_date")LocalDate startingDate,
-      @RequestParam(name = "ending_date")LocalDate endingDate){
-    return service.transactionsFilteredByDate(startingDate.atStartOfDay(), endingDate.atTime(LocalTime.MAX))
-        .stream().map(mapper::toRest).toList();
+      @RequestParam(name = "starting_date") LocalDate startingDate,
+      @RequestParam(name = "ending_date") LocalDate endingDate) {
+    return service
+        .transactionsFilteredByDate(startingDate.atStartOfDay(), endingDate.atTime(LocalTime.MAX))
+        .stream()
+        .map(mapper::toRest)
+        .toList();
   }
 
   @GetMapping("/user/transactions/{id}")

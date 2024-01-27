@@ -38,9 +38,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Whoami'
+                $ref: '#/components/schemas/Whoami'
         400:
           $ref: "#/components/responses/400"
         403:
@@ -109,7 +107,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CreateUser"
+                $ref: "#/components/schemas/CreatedUser"
         400:
           $ref: "#/components/responses/400"
         403:
@@ -341,7 +339,7 @@ components:
       type: object
       properties:
         user:
-          $ref: "#/components/schemas/CreateUser"
+          $ref: "#/components/schemas/CreatedUser"
         income:
           $ref: "#/components/schemas/Income"
     CreateUser:
@@ -353,7 +351,17 @@ components:
           type: string
         birthDate:
           type: string
-          format: date-time
+          format: date
+    CreatedUser:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        birthDate:
+          type: string
+          format: date
     Whoami:
       properties:
         id:

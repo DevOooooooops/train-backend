@@ -74,7 +74,12 @@ public class SecurityConf {
                 new NegatedRequestMatcher(
                     new OrRequestMatcher(
                         new AntPathRequestMatcher("/ping", GET.toString()),
-                        new AntPathRequestMatcher("/token", POST.toString())))),
+                        new AntPathRequestMatcher("/token", POST.toString()),
+                        new AntPathRequestMatcher("/user", POST.toString())
+                    )
+                )
+              )
+            ,
             AnonymousAuthenticationFilter.class)
         .authorizeHttpRequests(
             (authorize) ->
@@ -85,7 +90,12 @@ public class SecurityConf {
                     .authenticated()
                     .requestMatchers("/token")
                     .permitAll()
-
+                    .requestMatchers(POST, "/user")
+                    .permitAll()
+                    .requestMatchers(PUT, "/user")
+                    .authenticated()
+                    .requestMatchers(GET, "/user")
+                    .authenticated()
                     .requestMatchers(GET, "/user/transactions")
                         .authenticated()
                     .requestMatchers(GET, "/user/transactions/*")

@@ -16,4 +16,17 @@ public class UserService {
         .findByUsername(username)
         .orElseThrow(() -> new NotFoundException("User.username= " + username + " not found"));
   }
+
+  public User crupdateUser(User user){
+    return repository.save(user);
+  }
+
+  public User getUserById(String id){
+    return repository.findById(id).orElseThrow();
+  }
+
+//  TODO: implement level check
+  public static int checkLevel(){
+    return 0;
+  }
 }

@@ -2,6 +2,7 @@ package app.cashquest.api.endpoint.rest.mapper;
 
 import static app.cashquest.api.endpoint.rest.model.TransactionType.INCOME;
 
+import app.cashquest.api.endpoint.rest.model.BudgetSavingMode;
 import app.cashquest.api.endpoint.rest.model.CreateUser;
 import app.cashquest.api.endpoint.rest.model.CreatedUser;
 import app.cashquest.api.endpoint.rest.model.Income;
@@ -76,11 +77,11 @@ public class UserMapper {
     return new app.cashquest.api.endpoint.rest.model.User()
         .balance(balance.get())
         .level(user.getLevel())
-        .income(
+        .income(income != null ?
             new Income()
                 .amount(income.getAmount())
                 .earningFrequency(income.getEarningFrequency())
-                .savingTarget(income.getSavingTarget()))
+                .savingTarget(income.getSavingTarget()) : new Income().earningFrequency(BudgetSavingMode.DAILY))
         .user(toRest(user))
         .profile(
             new Profile()

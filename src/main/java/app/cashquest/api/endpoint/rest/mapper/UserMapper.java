@@ -10,6 +10,7 @@ import app.cashquest.api.endpoint.rest.model.Profile;
 import app.cashquest.api.endpoint.rest.model.UpdateUser;
 import app.cashquest.api.endpoint.rest.security.model.Principal;
 import app.cashquest.api.repository.TransactionRepository;
+import app.cashquest.api.repository.UserRepository;
 import app.cashquest.api.repository.model.Transaction;
 import app.cashquest.api.repository.model.User;
 import java.time.LocalDate;
@@ -26,6 +27,7 @@ public class UserMapper {
   private final PasswordEncoder passwordEncoder;
   private final IncomeMapper incomeMapper;
   private final TransactionRepository transactionRepository;
+  private final UserRepository userRepository;
 
   public User toDomain(CreateUser user) {
     return User.builder()
@@ -63,8 +65,7 @@ public class UserMapper {
         .build();
   }
 
-  public app.cashquest.api.endpoint.rest.model.User domainToRest(User user) {
-    app.cashquest.api.repository.model.Income income = user.getIncome();
+  public User computeIncome(User user){
     AtomicInteger balance = new AtomicInteger();
     List<Transaction> transactionList = transactionRepository.findByUserId(user.getId());
     transactionList.forEach(
@@ -75,8 +76,15 @@ public class UserMapper {
             balance.addAndGet(-transaction.getAmount());
           }
         });
+    user.setBalance(balance.get());
+    return userRepository.save(user);
+  }
+
+  public app.cashquest.api.endpoint.rest.model.User domainToRest(User user) {
+    app.cashquest.api.repository.model.Income income = user.getIncome();
+    User actual = computeIncome(user);
     return new app.cashquest.api.endpoint.rest.model.User()
-        .balance(balance.get())
+        .balance(actual.getBalance())
         .level(user.getLevel())
         .score(user.getScore())
         .income(income != null ?

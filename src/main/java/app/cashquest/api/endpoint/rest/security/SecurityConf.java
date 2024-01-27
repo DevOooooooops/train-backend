@@ -96,6 +96,8 @@ public class SecurityConf {
                     .authenticated()
                     .requestMatchers(GET, "/user")
                     .authenticated()
+                    .requestMatchers(GET, "/quest")
+                    .authenticated()
                     .requestMatchers(GET, "/user/transactions")
                         .authenticated()
                     .requestMatchers(GET, "/user/transactions/*")

@@ -224,6 +224,13 @@ paths:
         - Quests
       summary: Get current task to complete
       security: [ BearerAuth: []]
+      parameters:
+        - in: query
+          name: actualLevel
+          required: true
+          description: The user's actual level
+          schema:
+            type: number
       responses:
         200:
           description: The actual quest to complete

@@ -23,7 +23,7 @@ public class QuestHistoryController {
     return service.getQuestHistoriesByUser(userId);
   }
 
-  @PutMapping("/user/quest")
+  @PutMapping("/user/quest/history")
   public List<QuestHistory> crupdateQuestHistories(
       @AuthenticationPrincipal Principal principal,
       @RequestBody List<CreateQuestHistory> toCreate) {

@@ -20,9 +20,6 @@ public class QuestService {
 
   public Quest getQuest(Integer actualLevel) {
     Optional<Quest> quest = repository.findByRequiredLevel(actualLevel);
-    if (quest.isPresent()) {
-      return quest.get();
-    }
-    return null;
+    return quest.orElse(null);
   }
 }

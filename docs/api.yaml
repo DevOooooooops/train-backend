@@ -355,6 +355,8 @@ components:
     CreatedUser:
       type: object
       properties:
+        id:
+          type: string
         username:
           type: string
         birthDate:

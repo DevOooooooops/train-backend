@@ -28,6 +28,7 @@ public class User {
   @Column(name = "id", nullable = false)
   private String id;
   private String username;
+  @Column(name = "password", updatable = false)
   private String password;
   private LocalDate birthdate;
   @JdbcTypeCode(value = JSON)

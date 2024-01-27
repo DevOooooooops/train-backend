@@ -18,6 +18,7 @@ import static java.util.UUID.randomUUID;
 @AllArgsConstructor
 public class UserMapper {
   private final PasswordEncoder passwordEncoder;
+  private final IncomeMapper incomeMapper;
 
   public User toDomain(CreateUser user){
     return User.builder()
@@ -29,15 +30,17 @@ public class UserMapper {
 
   public CreatedUser toRest(User domain){
     return new CreatedUser()
+        .id(domain.getId())
         .username(domain.getUsername())
         .birthDate(LocalDate.from(domain.getBirthdate()));
   }
 
   public User toDomain(CrupdateUser user){
     return User.builder()
-        .id(randomUUID().toString())
+        .id(Objects.requireNonNull(user.getUser().getId()))
         .username(Objects.requireNonNull(user.getUser()).getUsername())
         .birthdate(LocalDate.from(Objects.requireNonNull(user.getUser().getBirthDate())))
+        .income(incomeMapper.toDomain(Objects.requireNonNull(user.getIncome())))
         .build();
   }
 

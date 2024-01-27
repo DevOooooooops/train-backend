@@ -1,5 +1,8 @@
 package app.cashquest.api.endpoint.rest.mapper;
 
+import static app.cashquest.api.endpoint.rest.model.TransactionType.INCOME;
+import static app.cashquest.api.service.UserService.checkLevel;
+
 import app.cashquest.api.endpoint.rest.model.CreateUser;
 import app.cashquest.api.endpoint.rest.model.CreatedUser;
 import app.cashquest.api.endpoint.rest.model.CrupdateUser;
@@ -16,9 +19,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import static app.cashquest.api.endpoint.rest.model.TransactionType.INCOME;
-import static app.cashquest.api.service.UserService.checkLevel;
-
 @Component
 @AllArgsConstructor
 public class UserMapper {
@@ -26,7 +26,7 @@ public class UserMapper {
   private final IncomeMapper incomeMapper;
   private final TransactionRepository transactionRepository;
 
-  public User toDomain(CreateUser user){
+  public User toDomain(CreateUser user) {
     return User.builder()
         .username(user.getUsername())
         .password(passwordEncoder.encode(user.getPassword()))
@@ -34,14 +34,14 @@ public class UserMapper {
         .build();
   }
 
-  public CreatedUser toRest(User domain){
+  public CreatedUser toRest(User domain) {
     return new CreatedUser()
         .id(domain.getId())
         .username(domain.getUsername())
         .birthDate(LocalDate.from(domain.getBirthdate()));
   }
 
-  public User toDomain(CrupdateUser user, Principal principal){
+  public User toDomain(CrupdateUser user, Principal principal) {
     CreatedUser userPayload = user.getUser();
     return User.builder()
         .id(principal.getUser().getId())
@@ -52,12 +52,12 @@ public class UserMapper {
         .build();
   }
 
-  public app.cashquest.api.endpoint.rest.model.User domainToRest(User user){
+  public app.cashquest.api.endpoint.rest.model.User domainToRest(User user) {
     app.cashquest.api.repository.model.Income income = user.getIncome();
     AtomicInteger balance = new AtomicInteger();
     List<Transaction> transactionList = transactionRepository.findByUserId(user.getId());
-    transactionList
-        .forEach(transaction -> {
+    transactionList.forEach(
+        transaction -> {
           if (INCOME.equals(transaction.getType())) {
             balance.addAndGet(transaction.getAmount());
           } else {
@@ -67,11 +67,10 @@ public class UserMapper {
     return new app.cashquest.api.endpoint.rest.model.User()
         .balance(balance.get())
         .income(
-                new Income()
-                        .amount(income.getAmount())
-                        .earningFrequency(income.getEarningFrequency())
-                        .savingTarget(user.getIncome().getSavingTarget())
-        )
+            new Income()
+                .amount(income.getAmount())
+                .earningFrequency(income.getEarningFrequency())
+                .savingTarget(user.getIncome().getSavingTarget()))
         .user(toRest(user))
         .level(checkLevel());
   }

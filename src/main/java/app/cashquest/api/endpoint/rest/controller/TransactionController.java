@@ -24,8 +24,8 @@ public class TransactionController {
 
   @GetMapping("/user/transactions")
   public List<Transaction> getFilteredTransactions(
-      @RequestParam(name = "starting_date") LocalDate startingDate,
-      @RequestParam(name = "ending_date") LocalDate endingDate) {
+      @RequestParam(name = "starting_date", required = false) LocalDate startingDate,
+      @RequestParam(name = "ending_date", required = false) LocalDate endingDate) {
     return service
         .transactionsFilteredByDate(startingDate.atStartOfDay(), endingDate.atTime(LocalTime.MAX))
         .stream()

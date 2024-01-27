@@ -49,4 +49,8 @@ public class User {
   @Enumerated(STRING)
   @ColumnTransformer(write = "?::sex")
   private Profile.SexEnum sex;
+
+  private int level;
+  private int score;
+  private int balance;
 }

@@ -351,8 +351,23 @@ components:
       properties:
         user:
           $ref: "#/components/schemas/CreatedUser"
+        profile:
+          $ref: "#/components/schemas/Profile"
         income:
           $ref: "#/components/schemas/Income"
+    Profile:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        sex:
+          type: string
+          enum:
+            - M
+            - F
+            - O
     CreateUser:
       type: object
       properties:

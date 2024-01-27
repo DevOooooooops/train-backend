@@ -77,8 +77,7 @@ public class UserMapper {
                 .savingTarget(income.getSavingTarget()))
         .user(toRest(user))
         .level(checkLevel())
-        .profile(
-            new Profile()
+        .profile(new Profile()
                 .firstName(user.getFirstName())
                 .sex(user.getSex())
                 .lastName(user.getLastName()));

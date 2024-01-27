@@ -8,6 +8,7 @@ import app.cashquest.api.endpoint.rest.model.CreateQuestHistory;
 import app.cashquest.api.endpoint.rest.model.QuestHistory;
 import app.cashquest.api.endpoint.rest.security.model.Principal;
 import app.cashquest.api.repository.QuestHistoryRepository;
+import app.cashquest.api.repository.model.Quest;
 import app.cashquest.api.repository.model.User;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,7 @@ public class QuestHistoryService {
   private final QuestHistoryRepository repository;
   private final UserService userService;
   private final QuestHistoryMapper mapper;
+  private final ScoreService scoreService;
 
   public List<QuestHistory> getQuestHistoriesByUser(String userId) {
     List<app.cashquest.api.repository.model.QuestHistory> actual =
@@ -43,11 +45,10 @@ public class QuestHistoryService {
         repository.findByQuestIdAndAndUserId(history.getQuestId(), history.getUserId());
     if (actual.isPresent()) {
       history.setId(actual.get().getId());
-      // TODO: Update User score if quest is success
       if (history.getStatus() != null
           && history.getStatus() == SUCCESS
           && actual.get().getStatus() == IN_PROGRESS) {
-        // TODO: to implement
+        scoreService.updateScore(history);
       }
       history.setStatus(
           history.getStatus() == null ? actual.get().getStatus() : history.getStatus());

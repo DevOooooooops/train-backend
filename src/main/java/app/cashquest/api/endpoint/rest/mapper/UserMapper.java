@@ -39,6 +39,7 @@ public class UserMapper {
 
   public CreatedUser toRest(User domain) {
     return new CreatedUser()
+        .id(domain.getId())
         .username(domain.getUsername())
         .birthDate(LocalDate.from(domain.getBirthdate()));
   }
@@ -77,6 +78,7 @@ public class UserMapper {
     return new app.cashquest.api.endpoint.rest.model.User()
         .balance(balance.get())
         .level(user.getLevel())
+        .score(user.getScore())
         .income(income != null ?
             new Income()
                 .amount(income.getAmount())

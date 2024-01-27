@@ -25,8 +25,4 @@ public class UserService {
     return repository.findById(id).orElseThrow();
   }
 
-  //  TODO: implement level check
-  public static int checkLevel() {
-    return 0;
-  }
 }

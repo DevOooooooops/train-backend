@@ -14,10 +14,10 @@ ALTER TABLE "user_table"
     ADD COLUMN if not exists  sex sex;
 
 ALTER TABLE "user_table"
-    ADD COLUMN if not exists balance int;
+    ADD COLUMN if not exists balance int not null default 0;
 
 ALTER TABLE "user_table"
-    ADD COLUMN if not exists level int;
+    ADD COLUMN if not exists level int not null default 0;
 
 ALTER TABLE "user_table"
-    ADD COLUMN if not exists score int;
+    ADD COLUMN if not exists score int not null default 0;

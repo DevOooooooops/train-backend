@@ -5,7 +5,7 @@ import static app.cashquest.api.service.UserService.checkLevel;
 
 import app.cashquest.api.endpoint.rest.model.CreateUser;
 import app.cashquest.api.endpoint.rest.model.CreatedUser;
-import app.cashquest.api.endpoint.rest.model.CrupdateUser;
+import app.cashquest.api.endpoint.rest.model.UpdateUser;
 import app.cashquest.api.endpoint.rest.model.Income;
 import app.cashquest.api.endpoint.rest.model.Profile;
 import app.cashquest.api.endpoint.rest.security.model.Principal;
@@ -42,7 +42,7 @@ public class UserMapper {
         .birthDate(LocalDate.from(domain.getBirthdate()));
   }
 
-  public User toDomain(CrupdateUser user, Principal principal) {
+  public User toDomain(UpdateUser user, Principal principal) {
     CreatedUser userPayload = user.getUser();
     Profile profile = user.getProfile();
     return User.builder()

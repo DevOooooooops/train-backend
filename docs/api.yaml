@@ -218,6 +218,36 @@ paths:
           $ref: '#/components/responses/403'
         500:
           $ref: '#/components/responses/500'
+  '/user/quest':
+    put:
+      tags:
+        - Users
+      summary: Update user quest status
+      operationId: updateUserQuestStatus
+      security: [ BearerAuth: []]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/CreateQuestHistory"
+        required: true
+      responses:
+        200:
+          description: the updated quest statuses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/QuestHistory"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
   '/quest':
     get:
       tags:
@@ -244,7 +274,34 @@ paths:
           $ref: "#/components/responses/403"
         500:
           $ref: "#/components/responses/500"
-
+  '/user/{userId}/quest/history':
+    get:
+      tags:
+        - Users
+      summary: Get list of quest done or not by the user
+      security: [ BearerAuth: []]
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          description: The user's id
+          schema:
+            type: string
+      responses:
+        200:
+          description: List of quests done or not by the current user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/QuestHistory"
+        400:
+          $ref: "#/components/responses/400"
+        403:
+          $ref: "#/components/responses/403"
+        500:
+          $ref: "#/components/responses/500"
 
 components:
   securitySchemes:
@@ -298,6 +355,35 @@ components:
           type: number
         requiredLevel:
           type: number
+    CreateQuestHistory:
+      type: object
+      properties:
+        id:
+          type: string
+        questId:
+          type: string
+        userId:
+          type: string
+        status:
+          $ref: "#/components/schemas/QuestStatus"
+    QuestHistory:
+      type: object
+      properties:
+        id:
+          type: string
+        quest:
+          $ref: "#/components/schemas/Quest"
+        user:
+          $ref: "#/components/schemas/User"
+        status:
+          $ref: "#/components/schemas/QuestStatus"
+    QuestStatus:
+      type: string
+      enum:
+        - PENDING
+        - INPROGRESS
+        - SUCCESS
+        - FAILED
     User:
       type: object
       allOf:

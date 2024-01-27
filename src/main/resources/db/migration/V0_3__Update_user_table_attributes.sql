@@ -8,7 +8,7 @@ end
 $$;
 
 ALTER TABLE "user_table"
-    ADD budget_saving_mode budget_saving_mode;
+    ADD COLUMN if not exists budget_saving_mode budget_saving_mode;
 
 ALTER TABLE "user_table"
     ADD CONSTRAINT username_unique unique (username);

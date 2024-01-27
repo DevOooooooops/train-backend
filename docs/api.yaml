@@ -406,6 +406,9 @@ components:
         level:
           type: integer
           format: int32
+        score:
+          type: integer
+          format: int32
         balance:
           type: integer
           description: real balance times 100, the last two digits will place the decimal point

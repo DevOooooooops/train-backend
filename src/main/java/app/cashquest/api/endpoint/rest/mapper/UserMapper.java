@@ -1,7 +1,6 @@
 package app.cashquest.api.endpoint.rest.mapper;
 
 import static app.cashquest.api.endpoint.rest.model.TransactionType.INCOME;
-import static app.cashquest.api.service.UserService.checkLevel;
 
 import app.cashquest.api.endpoint.rest.model.CreateUser;
 import app.cashquest.api.endpoint.rest.model.CreatedUser;
@@ -32,6 +31,8 @@ public class UserMapper {
         .username(user.getUsername())
         .password(passwordEncoder.encode(user.getPassword()))
         .birthdate(LocalDate.from(Objects.requireNonNull(user.getBirthDate())))
+        .score(0)
+        .balance(0)
         .build();
   }
 
@@ -44,8 +45,9 @@ public class UserMapper {
   public User toDomain(UpdateUser user, Principal principal) {
     CreatedUser userPayload = user.getUser();
     Profile profile = user.getProfile();
+    User actual = principal.getUser();
     return User.builder()
-        .id(principal.getUser().getId())
+        .id(actual.getId())
         .password(principal.getPassword())
         .username(Objects.requireNonNull(userPayload).getUsername())
         .birthdate(LocalDate.from(Objects.requireNonNull(userPayload.getBirthDate())))
@@ -53,6 +55,9 @@ public class UserMapper {
         .firstName(profile.getFirstName())
         .lastName(profile.getLastName())
         .sex(profile.getSex())
+        .balance(actual.getBalance())
+        .score(actual.getScore())
+        .level(actual.getLevel())
         .build();
   }
 
@@ -70,17 +75,18 @@ public class UserMapper {
         });
     return new app.cashquest.api.endpoint.rest.model.User()
         .balance(balance.get())
+        .level(user.getLevel())
         .income(
             new Income()
                 .amount(income.getAmount())
                 .earningFrequency(income.getEarningFrequency())
                 .savingTarget(income.getSavingTarget()))
         .user(toRest(user))
-        .level(checkLevel())
         .profile(
             new Profile()
                 .firstName(user.getFirstName())
                 .sex(user.getSex())
-                .lastName(user.getLastName()));
+                .lastName(user.getLastName()))
+        .user(toRest(user));
   }
 }

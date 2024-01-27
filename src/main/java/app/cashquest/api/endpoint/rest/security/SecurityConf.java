@@ -94,7 +94,7 @@ public class SecurityConf {
                     .authenticated()
                     .requestMatchers(GET, "/quest")
                     .authenticated()
-                    .requestMatchers(PUT, "/user/quest")
+                    .requestMatchers(PUT, "/user/quest/history")
                     .authenticated()
                     .requestMatchers(GET, "/user/*/quest/history")
                     .authenticated()

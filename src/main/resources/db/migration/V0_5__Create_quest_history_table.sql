@@ -2,7 +2,7 @@ DO
 $$
     begin
         if not exists (select from pg_type where typname = 'quest_status') then
-            create type quest_status as ENUM ('PENDING', 'INPROGRESS', 'SUCCESS', 'FAILED');
+            create type quest_status as ENUM ('PENDING', 'IN_PROGRESS', 'SUCCESS', 'FAILED');
         end if;
     end
 $$;

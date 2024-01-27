@@ -218,12 +218,12 @@ paths:
           $ref: '#/components/responses/403'
         500:
           $ref: '#/components/responses/500'
-  '/user/quest':
+  '/user/quest/history':
     put:
       tags:
         - Users
-      summary: Update user quest status
-      operationId: updateUserQuestStatus
+      summary: Update user quest history
+      operationId: updateUserQuestHistory
       security: [ BearerAuth: []]
       requestBody:
         content:
@@ -381,7 +381,7 @@ components:
       type: string
       enum:
         - PENDING
-        - INPROGRESS
+        - IN_PROGRESS
         - SUCCESS
         - FAILED
     User:

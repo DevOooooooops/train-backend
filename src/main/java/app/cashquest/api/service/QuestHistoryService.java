@@ -1,9 +1,11 @@
 package app.cashquest.api.service;
 
+import static app.cashquest.api.endpoint.rest.model.QuestStatus.IN_PROGRESS;
+import static app.cashquest.api.endpoint.rest.model.QuestStatus.SUCCESS;
+
 import app.cashquest.api.endpoint.rest.mapper.QuestHistoryMapper;
 import app.cashquest.api.endpoint.rest.model.CreateQuestHistory;
 import app.cashquest.api.endpoint.rest.model.QuestHistory;
-import app.cashquest.api.endpoint.rest.model.QuestStatus;
 import app.cashquest.api.endpoint.rest.security.model.Principal;
 import app.cashquest.api.repository.QuestHistoryRepository;
 import app.cashquest.api.repository.model.User;
@@ -11,9 +13,6 @@ import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import static app.cashquest.api.endpoint.rest.model.QuestStatus.INPROGRESS;
-import static app.cashquest.api.endpoint.rest.model.QuestStatus.SUCCESS;
 
 @Service
 @AllArgsConstructor
@@ -32,24 +31,26 @@ public class QuestHistoryService {
   public List<QuestHistory> crupdateUserQuestStatus(
       List<CreateQuestHistory> toSave, Principal principal) {
     List<app.cashquest.api.repository.model.QuestHistory> saved =
-        repository.saveAll(toSave.stream()
-            .map(this::checkExistence)
-            .map(mapper::toDomain)
-            .toList());
+        repository.saveAll(
+            toSave.stream().map(this::checkExistence).map(mapper::toDomain).toList());
     return saved.stream()
         .map(questHistory -> mapper.toRest(questHistory, principal.getUser()))
         .toList();
   }
 
   private CreateQuestHistory checkExistence(CreateQuestHistory history) {
-    Optional<app.cashquest.api.repository.model.QuestHistory> actual = repository.findByQuestIdAndAndUserId(history.getQuestId(), history.getUserId());
-    if(actual.isPresent()) {
+    Optional<app.cashquest.api.repository.model.QuestHistory> actual =
+        repository.findByQuestIdAndAndUserId(history.getQuestId(), history.getUserId());
+    if (actual.isPresent()) {
       history.setId(actual.get().getId());
       // TODO: Update User score if quest is success
-      if(history.getStatus() != null && history.getStatus() == SUCCESS && actual.get().getStatus() == INPROGRESS ) {
+      if (history.getStatus() != null
+          && history.getStatus() == SUCCESS
+          && actual.get().getStatus() == IN_PROGRESS) {
         // TODO: to implement
       }
-      history.setStatus(history.getStatus() == null ? actual.get().getStatus() : history.getStatus());
+      history.setStatus(
+          history.getStatus() == null ? actual.get().getStatus() : history.getStatus());
     }
     return history;
   }

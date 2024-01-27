@@ -27,7 +27,7 @@ public class TransactionController {
       @RequestParam(name = "starting_date", required = false) LocalDate startingDate,
       @RequestParam(name = "ending_date", required = false) LocalDate endingDate) {
     return service
-        .transactionsFilteredByDate(startingDate.atStartOfDay(), endingDate.atTime(LocalTime.MAX))
+        .transactionsFilteredByDate(startingDate, endingDate)
         .stream()
         .map(mapper::toRest)
         .toList();

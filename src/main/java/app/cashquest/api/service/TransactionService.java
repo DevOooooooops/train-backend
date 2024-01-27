@@ -6,6 +6,7 @@ import app.cashquest.api.endpoint.rest.security.exception.NotFoundException;
 import app.cashquest.api.repository.DAO.TransactionDAO;
 import app.cashquest.api.repository.TransactionRepository;
 import app.cashquest.api.repository.model.Transaction;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -33,8 +34,8 @@ public class TransactionService {
   }
 
   public List<Transaction> transactionsFilteredByDate(
-      LocalDateTime startingDate, LocalDateTime endingDate) {
+          LocalDate startingDate, LocalDate endingDate) {
     return transactionDAO.findByStartingDateAndEndingDate(
-        startingDate.toInstant(UTC), endingDate.toInstant(UTC));
+            startingDate, endingDate);
   }
 }

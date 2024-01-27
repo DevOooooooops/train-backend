@@ -7,6 +7,7 @@ import app.cashquest.api.endpoint.rest.model.CreateUser;
 import app.cashquest.api.endpoint.rest.model.CreatedUser;
 import app.cashquest.api.endpoint.rest.model.CrupdateUser;
 import app.cashquest.api.endpoint.rest.model.Income;
+import app.cashquest.api.endpoint.rest.model.Profile;
 import app.cashquest.api.endpoint.rest.security.model.Principal;
 import app.cashquest.api.repository.TransactionRepository;
 import app.cashquest.api.repository.model.Transaction;
@@ -43,12 +44,16 @@ public class UserMapper {
 
   public User toDomain(CrupdateUser user, Principal principal) {
     CreatedUser userPayload = user.getUser();
+    Profile profile = user.getProfile();
     return User.builder()
         .id(principal.getUser().getId())
         .password(principal.getPassword())
         .username(Objects.requireNonNull(userPayload).getUsername())
         .birthdate(LocalDate.from(Objects.requireNonNull(userPayload.getBirthDate())))
         .income(incomeMapper.toDomain(Objects.requireNonNull(user.getIncome())))
+        .firstName(profile.getFirstName())
+        .lastName(profile.getLastName())
+        .sex(profile.getSex())
         .build();
   }
 
@@ -72,6 +77,10 @@ public class UserMapper {
                 .earningFrequency(income.getEarningFrequency())
                 .savingTarget(user.getIncome().getSavingTarget()))
         .user(toRest(user))
-        .level(checkLevel());
+        .level(checkLevel())
+        .profile(new Profile()
+                .firstName(user.getFirstName())
+                .sex(user.getSex())
+                .lastName(user.getLastName()));
   }
 }

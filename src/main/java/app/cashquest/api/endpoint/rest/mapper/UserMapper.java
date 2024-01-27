@@ -75,7 +75,7 @@ public class UserMapper {
             new Income()
                 .amount(income.getAmount())
                 .earningFrequency(income.getEarningFrequency())
-                .savingTarget(user.getIncome().getSavingTarget()))
+                .savingTarget(income.getSavingTarget()))
         .user(toRest(user))
         .level(checkLevel())
         .profile(new Profile()

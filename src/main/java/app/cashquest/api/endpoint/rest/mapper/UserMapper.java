@@ -45,9 +45,9 @@ public class UserMapper {
     app.cashquest.api.repository.model.Income income = user.getIncome();
     return new app.cashquest.api.endpoint.rest.model.User()
 //        TODO: calculate balance based on income and outcome
-        .balance(income.getAmount())
-        .income(new Income().amount(income.getAmount())
-                .earningFrequency(income.getEarningFrequency()))
+        .balance(income != null ? income.getAmount() : null)
+        .income(income != null ? new Income().amount(income.getAmount())
+            .earningFrequency(income.getEarningFrequency()): null)
         .user(toRest(user))
         .level(checkLevel());
   }

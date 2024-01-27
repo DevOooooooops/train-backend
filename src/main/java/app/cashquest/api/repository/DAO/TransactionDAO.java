@@ -24,12 +24,16 @@ public class TransactionDAO {
   private EntityManager entityManager;
 
   public List<Transaction> findByStartingDateAndEndingDate(
+          String userId,
           LocalDate startingDate, LocalDate endingDate) {
+    assert userId != null : "userId is mandatory";
     CriteriaBuilder cb = entityManager.getCriteriaBuilder();
     CriteriaQuery<Transaction> query = cb.createQuery(Transaction.class);
     Root<Transaction> root = query.from(Transaction.class);
 
     List<Predicate> predicates = new ArrayList<>();
+
+    predicates.add(cb.equal(root.get("userId"),userId));
 
     if (startingDate != null) {
       Predicate startingDatePredicate =

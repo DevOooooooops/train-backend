@@ -1,15 +1,11 @@
 package app.cashquest.api.service;
 
-import static app.cashquest.api.endpoint.rest.model.TransactionType.INCOME;
-import static java.time.ZoneOffset.UTC;
-
 import app.cashquest.api.endpoint.rest.mapper.UserMapper;
 import app.cashquest.api.endpoint.rest.security.exception.NotFoundException;
 import app.cashquest.api.repository.DAO.TransactionDAO;
 import app.cashquest.api.repository.TransactionRepository;
 import app.cashquest.api.repository.model.Transaction;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import app.cashquest.api.repository.model.User;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -49,10 +45,10 @@ public class TransactionService {
       return transaction;
   }
 
-  public List<Transaction> transactionsFilteredByDate(
+  public List<Transaction> getUserTransactionsFilteredByDate(
+          User user,
           LocalDate startingDate, LocalDate endingDate) {
-    return transactionDAO.findByStartingDateAndEndingDate(
-            startingDate, endingDate);
+    return transactionDAO.findByStartingDateAndEndingDate(user.getId(), startingDate, endingDate);
   }
 
 }

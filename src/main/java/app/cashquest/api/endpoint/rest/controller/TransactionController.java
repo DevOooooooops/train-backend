@@ -5,7 +5,6 @@ import app.cashquest.api.endpoint.rest.model.Transaction;
 import app.cashquest.api.endpoint.rest.security.model.Principal;
 import app.cashquest.api.service.TransactionService;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,10 +23,12 @@ public class TransactionController {
 
   @GetMapping("/user/transactions")
   public List<Transaction> getFilteredTransactions(
+      @AuthenticationPrincipal
+      Principal principal,
       @RequestParam(name = "starting_date", required = false) LocalDate startingDate,
       @RequestParam(name = "ending_date", required = false) LocalDate endingDate) {
     return service
-        .transactionsFilteredByDate(startingDate, endingDate)
+        .getUserTransactionsFilteredByDate(principal.getUser(), startingDate, endingDate)
         .stream()
         .map(mapper::toRest)
         .toList();

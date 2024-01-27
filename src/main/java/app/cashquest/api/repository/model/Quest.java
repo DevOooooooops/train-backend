@@ -19,10 +19,13 @@ public class Quest {
   @Id
   @Column(name = "id", nullable = false)
   private String id;
+
   @Column(name = "name", nullable = false)
   private String name;
+
   @Column(name = "objective_description", nullable = false)
   private String objectiveDescription;
+
   private double amountObjective;
   private int points;
   private Integer requiredLevel;

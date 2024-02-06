@@ -15,6 +15,21 @@ java {
     sourceCompatibility = '17'
 }
 
+task generateReactNativeClient(type: GenerateTask) {
+    generatorName = "typescript-fetch"
+    inputSpec = "$rootDir/docs/api.yaml".toString()
+    outputDir = "$buildDir/gen-react-native-ts".toString()
+    typeMappings = [
+            Date    : "Date",
+            DateTime: "Date",
+    ]
+    additionalProperties = [
+            enumPropertyNaming: "original",
+            npmName           : "@bpartners/react-native-typescript-client",
+            npmVersion        : project.properties["args"] ?: "latest"
+    ]
+}
+
 task generateJavaClient(type: GenerateTask) {
     generatorName = "java"
     inputSpec = "$rootDir/docs/api.yaml".toString()
